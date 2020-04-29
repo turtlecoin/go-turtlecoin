@@ -35,7 +35,7 @@ func main() {
 		_, pubViewKey = crypto.GenerateViewFromSpend(privSpendKey)
 		address = utils.AddressFromKeys(pubSpendKey, pubViewKey)
 
-		if strings.Contains(address, prefix) {
+		if strings.HasPrefix(address[6:], prefix) {
 			println("Yay!!! Found an address\nIt took " + strconv.Itoa(i) + " tries\n")
 			println("Private Spend Key: " + hex.EncodeToString(privSpendKey[:]))
 			println("Address: " + address)
