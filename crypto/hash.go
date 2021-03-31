@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"errors"
 
+	"golang.org/x/crypto/argon2"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -74,6 +75,22 @@ func SHA3SlowHash(input []byte, iterations uint64) *Hash {
 		buf.idx = i
 		result = sha3.Sum256(buf.Bytes())
 	}
+
+	return &Hash{result}
+}
+
+func Argon2i(input []byte, iterations, memory uint32, threads uint8) *Hash {
+	var result [32]byte
+
+	copy(result[:], argon2.Key(input, input, iterations, memory, threads, 32))
+
+	return &Hash{result}
+}
+
+func Argon2id(input []byte, iterations, memory uint32, threads uint8) *Hash {
+	var result [32]byte
+
+	copy(result[:], argon2.IDKey(input, input, iterations, memory, threads, 32))
 
 	return &Hash{result}
 }

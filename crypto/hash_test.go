@@ -19,6 +19,8 @@ var sha3hash = []byte{
 const (
 	sha3slow0    = "974506601a60dc465e6e9acddb563889e63471849ec4198656550354b8541fcb"
 	sha3slow4096 = "c031be420e429992443c33c2a453287e2678e70b8bce95dfe7357bcbf36ca86c"
+	argon2i      = "debb2a3b51732bff26670753c5dbaedf6139c177108fe8e0744305c8d410a75a"
+	argon2id     = "a6ac954bce48a46bc01a9b16b484ffb745401ae421b1b6f2e22cf474d4cac1c9"
 )
 
 func TestSHA3(t *testing.T) {
@@ -37,5 +39,19 @@ func TestSHA3SlowHash(t *testing.T) {
 	res4096 := SHA3SlowHash(input, 4096)
 	if sha3slow4096 != res4096.String() {
 		t.Errorf("error computing sha3 slow hash\nInput: %s\nExpected: %s\nActual: %s", hex.EncodeToString(input), sha3slow4096, res4096.String())
+	}
+}
+
+func TestArgon2i(t *testing.T) {
+	res := Argon2i(input, 4, 1024, 1)
+	if argon2i != res.String() {
+		t.Errorf("error computing argon2i hash\nInput: %s\nExpected: %s\nActual: %s", hex.EncodeToString(input), argon2i, res.String())
+	}
+}
+
+func TestArgon2id(t *testing.T) {
+	res := Argon2id(input, 4, 1024, 1)
+	if argon2id != res.String() {
+		t.Errorf("error computing argon2i hash\nInput: %s\nExpected: %s\nActual: %s", hex.EncodeToString(input), argon2id, res.String())
 	}
 }
